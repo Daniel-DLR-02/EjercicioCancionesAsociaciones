@@ -4,6 +4,8 @@ package com.triana.salesianos.EjercicioSongs.model;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter @Setter
@@ -25,6 +27,9 @@ public class Song {
 
     private String year;
 
+    @ManyToMany(mappedBy = "songs", fetch = FetchType.EAGER)
+    private List<Playlist> playlists;
+
     public void addArtist(Artist art) {
         this.artist=art;
         art.getSongs().add(this);
@@ -34,4 +39,5 @@ public class Song {
         art.getSongs().remove(this);
         this.artist = null;
     }
+
 }
