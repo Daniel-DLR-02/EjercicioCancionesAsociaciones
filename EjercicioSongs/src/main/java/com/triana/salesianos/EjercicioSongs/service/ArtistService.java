@@ -6,5 +6,6 @@ import com.triana.salesianos.EjercicioSongs.service.base.BaseService;
 import org.springframework.stereotype.Service;
 
 @Service
-public class ArtistService extends BaseService<Artist,Long, ArtistRepository> {
+public class ArtistService
+        extends BaseService<Artist,Long, ArtistRepository> {
 }

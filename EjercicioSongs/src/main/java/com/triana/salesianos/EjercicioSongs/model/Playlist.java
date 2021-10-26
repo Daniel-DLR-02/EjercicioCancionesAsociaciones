@@ -10,7 +10,6 @@ import java.util.List;
 @Getter @Setter
 @NoArgsConstructor @AllArgsConstructor
 @Builder
-@Table(name = "playlist")
 public class Playlist {
 
     @Id
@@ -21,15 +20,13 @@ public class Playlist {
 
     private String description;
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(joinColumns = @JoinColumn(name = "playlist_id",
-            foreignKey = @ForeignKey(name="FK_SONG_PLAYLIST")),
-            inverseJoinColumns = @JoinColumn(name = "song_id",
-                    foreignKey = @ForeignKey(name="FK_PLAYLIST_SONG")),
-            name = "playlist"
-    )
-    private List<Song> songs = new ArrayList<>();
+    @Builder.Default
+    @OneToMany
+    private List<AddedTo> addedTo = new ArrayList<>();
 
+    @OneToMany(fetch = FetchType.EAGER)
+    private List<Song> songs = new ArrayList<>();
+/*
     public void addSong(Song s) {
         if (this.getSongs() == null)
             this.setSongs(new ArrayList<>());
@@ -44,5 +41,5 @@ public class Playlist {
         s.getPlaylists().remove(this);
         this.getSongs().remove(s);
     }
-
+*/
 }

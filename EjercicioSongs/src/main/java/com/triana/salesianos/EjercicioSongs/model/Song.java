@@ -11,8 +11,8 @@ import java.util.List;
 @Getter @Setter
 @NoArgsConstructor @AllArgsConstructor
 @Builder
-@Table(name = "song")
 public class Song {
+
 
     @Id
     @GeneratedValue
@@ -20,24 +20,22 @@ public class Song {
 
     private String title;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private Artist artist;
 
     private String album;
 
     private String year;
 
-    @ManyToMany(mappedBy = "songs", fetch = FetchType.EAGER)
-    private List<Playlist> playlists;
+    @Builder.Default
+    @OneToMany
+    private List<AddedTo> addedTo = new ArrayList<>();
 
-    public void addArtist(Artist art) {
-        this.artist=art;
-        art.getSongs().add(this);
+    public Song(Long id, String title, Artist artist, String album, String year) {
+        this.id = id;
+        this.title = title;
+        this.artist = artist;
+        this.album = album;
+        this.year = year;
     }
-
-    public void deleteArtist(Artist art) {
-        art.getSongs().remove(this);
-        this.artist = null;
-    }
-
 }

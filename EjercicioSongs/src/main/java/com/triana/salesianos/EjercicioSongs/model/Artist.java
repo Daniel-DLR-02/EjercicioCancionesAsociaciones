@@ -11,20 +11,24 @@ import java.util.List;
 @NoArgsConstructor @AllArgsConstructor
 @Getter @Setter
 @Builder
-@Table(name = "artist")
 public class Artist {
 
     @Id
     @GeneratedValue
     private Long id;
 
-    @Column(name = "name")
     private String name;
 
-    @OneToMany(mappedBy = "artist")
-    private List<Song> songs = new ArrayList<Song>();
+    @OneToMany(fetch = FetchType.EAGER)
+    private List<Song> songs = new ArrayList<>();
 
-    public Artist(String name){
-        this.name=name;
+    public void addSong(Song s) {
+        this.songs.add(s);
+        s.setArtist(this);
+    }
+
+    public void removeSong(Song s) {
+        this.songs.remove(s);
+        s.setArtist(null);
     }
 }
